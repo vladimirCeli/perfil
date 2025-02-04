@@ -6,81 +6,90 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
-    />
-    <title>Perfil</title>
+    <script>
+        // Calculando la edad de manera dinámica
+        window.onload = function () {
+            const birthDate = new Date(2001, 0, 8); // 8 de enero de 2001
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            document.getElementById("age").textContent = age;
+        }
+    </script>
+    <title>Perfil de Vladimir</title>
 </head>
 
-<body class="bg-gradient-to-r from-cyan-900 to-blue-900">
-    <div class="relative w-full max-w-lg place-items-center mx-auto">
-        <div class="container mx-auto flex justify-center">
-            <h1 class="p-6 text-2xl font-sans text-white">HELLO WELCOME TO MY PROFILE</h1>
+<body class="bg-gradient-to-r from-blue-800 to-cyan-900 text-white font-sans">
+    <div class="max-w-4xl mx-auto p-6">
+        <!-- Titulo -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Hello, welcome to my profile!</h1>
         </div>
-        <div class="container-sm shadow-2xl flex justify-center  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex flex-col items-center pb-10">
-                <img class="mb-3 w-42 h-45 rounded-full shadow-lg" src="perfil.jpg" alt="Bonnie image" />
-                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Vladimir Abelardo Celi Alvarez</h5>
-                <span class="text-sm text-gray-500 dark:text-gray-400">Computer Student</span>
-                <div class="flex mt-4 space-x-3 lg:mt-6">
-                    <a href="https://github.com/vladimirCeli" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><i class="fa-brands fa-github"></i> Follow</a>
-                    <a href="mailto:vladimirCeli@unl.edu.ec" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Message</a>
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 mx-auto flex justify-center text-center">
-            <div>
-                <h1 class="p-6 tex-2xl font-sans text-white">
-                    About me
-                </h1>
-            </div>
-            <div class="flex space-x-4 p-2 text-white justify-center">
-                <p>Hello, I am 21 years old and I am studying computer science engineering at the National University of Loja. I hope to graduate in the not too distant future and get a job to continue preparing myself to specialize</p>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 mx-auto flex justify-center text-center">
-            <div>
-                <h1 class="p-6 tex-2xl font-sans text-white">
-                    My skills
-                </h1>
-            </div>
-            <div class="flex space-x-4 p-2 text-white justify-center">
-                <a>Java</a>
-                <a>Javascript</a>
-                <a>Python</a>
-                <a>C/C++</a>
-                <a>HTML</a>
-                <a>CSS</a>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 mx-auto flex justify-center text-center ">
-            <div>
-                <h1 class="p-6 tex-2xl font-sans text-white ">
-                    Interests
-                </h1>
-            </div>
-            <div class="flex space-x-4 p-2 text-white justify-center ">
-                <a>Software development</a>
-                <a>Internet of things</a>
-                <a>Artificial intelligence</a>
-                <a>Data mining</a>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 mx-auto flex justify-center text-center ">
-            <div>
-                <h1 class="p-6 tex-2xl font-sans text-white ">
-                    Social Networks
-                </h1>
-            </div>
-            <div class="flex space-x-4 p-1 text-white justify-center ">
-                <a href="https://wa.me/593986597167 "><i class="fa-brands fa-whatsapp "></i></a>
-                <a href="https://es-la.facebook.com/26CELI "><i class="fa-brands fa-facebook "></i></a>
-                <a href="https://www.youtube.com/channel/UC4hggU9YdGJKEsL0qtgctmQ "><i class="fa-brands fa-youtube "></i></a>
-            </div>
-        </div>
-    </div>
-    </div>
-    <footer>
 
+        <!-- Card de Perfil -->
+        <div class="bg-white text-gray-900 shadow-lg rounded-xl p-6 flex flex-col items-center">
+            <img class="mb-4 w-32 h-32 rounded-full border-4 border-blue-500 shadow-xl" src="perfil.jpg" alt="Perfil de Vladimir" />
+            <h2 class="text-2xl font-semibold mb-2">Vladimir Abelardo Celi Alvarez</h2>
+            <p class="text-lg mb-4">Computer Science Student | Age: <span id="age">...</span> years old</p>
+            <div class="flex space-x-4 mb-4">
+                <a href="https://github.com/vladimirCeli" class="text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2">
+                    <i class="fa-brands fa-github"></i> GitHub
+                </a>
+                <a href="mailto:vladimirCeli@unl.edu.ec" class="text-white bg-gray-800 hover:bg-gray-900 rounded-lg px-4 py-2">
+                    <i class="fa-solid fa-envelope"></i> Email
+                </a>
+            </div>
+        </div>
+
+        <!-- Sección Acerca de Mí -->
+        <div class="mt-10">
+            <h2 class="text-3xl font-semibold mb-4">About Me</h2>
+            <p class="text-lg">
+                Hello, I am <strong>21 years old</strong> (dynamic age calculated). I am pursuing a degree in Computer Science Engineering at the National University of Loja. I am passionate about technology and eager to continue learning, grow my skills, and contribute to innovative projects in the tech world.
+            </p>
+        </div>
+
+        <!-- Sección de Habilidades -->
+        <div class="mt-10">
+            <h2 class="text-3xl font-semibold mb-4">My Skills</h2>
+            <div class="flex flex-wrap gap-4">
+                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">Java</span>
+                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">JavaScript</span>
+                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">Python</span>
+                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">C/C++</span>
+                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">HTML</span>
+                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">CSS</span>
+            </div>
+        </div>
+
+        <!-- Sección de Intereses -->
+        <div class="mt-10">
+            <h2 class="text-3xl font-semibold mb-4">Interests</h2>
+            <div class="flex flex-wrap gap-4">
+                <span class="bg-green-500 text-white px-4 py-2 rounded-full">Software Development</span>
+                <span class="bg-green-500 text-white px-4 py-2 rounded-full">IoT (Internet of Things)</span>
+                <span class="bg-green-500 text-white px-4 py-2 rounded-full">AI (Artificial Intelligence)</span>
+                <span class="bg-green-500 text-white px-4 py-2 rounded-full">Data Mining</span>
+            </div>
+        </div>
+
+        <!-- Redes Sociales -->
+        <div class="mt-10">
+            <h2 class="text-3xl font-semibold mb-4">Social Networks</h2>
+            <div class="flex space-x-4 justify-center">
+                <a href="https://wa.me/593986597167" class="text-green-500 hover:text-green-600"><i class="fa-brands fa-whatsapp fa-2x"></i></a>
+                <a href="https://es-la.facebook.com/26CELI" class="text-blue-600 hover:text-blue-700"><i class="fa-brands fa-facebook fa-2x"></i></a>
+                <a href="https://www.youtube.com/channel/UC4hggU9YdGJKEsL0qtgctmQ" class="text-red-600 hover:text-red-700"><i class="fa-brands fa-youtube fa-2x"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de Página -->
+    <footer class="bg-gray-900 text-center text-white py-4 mt-10">
+        <p>&copy; 2025 Vladimir Abelardo Celi Alvarez. All rights reserved.</p>
     </footer>
 </body>
 
