@@ -1,96 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background: #0f0f0f;
+            overflow-x: hidden;
+        }
+
+        .glow {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .skill-card {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            transition: all 0.4s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .interest-card {
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            transition: all 0.4s ease;
+        }
+
+        .interest-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(72, 187, 120, 0.3);
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .neon-border {
+            position: relative;
+        }
+
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #3b82f6, #10b981, #3b82f6);
+            border-radius: inherit;
+            z-index: -1;
+            animation: borderAnimation 3s ease infinite;
+        }
+
+        @keyframes borderAnimation {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-arrow-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            animation: bounceDown 2s infinite;
+        }
+
+        .scroll-arrow-up {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            cursor: pointer;
+            background: rgba(59, 130, 246, 0.2);
+            padding: 1rem;
+            border-radius: 50%;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-arrow-up.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-arrow-up:hover {
+            background: rgba(59, 130, 246, 0.4);
+            transform: translateY(-5px);
+        }
+
+        @keyframes bounceDown {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+    </style>
     <script>
-        // Calculando la edad de manera dinámica
-        window.onload = function () {
-            const birthDate = new Date(2001, 0, 8); // 8 de enero de 2001
+        window.onload = function() {
+            const birthDate = new Date(2001, 0, 8);
             const today = new Date();
-            const age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            let age = today.getFullYear() - birthDate.getFullYear();
+            if (today.getMonth() < birthDate.getMonth() || 
+                (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
                 age--;
             }
             document.getElementById("age").textContent = age;
-        }
+
+            // Animaciones de entrada
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-slide-up');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Nueva funcionalidad para las flechas de scroll
+            const scrollArrowUp = document.querySelector('.scroll-arrow-up');
+            
+            // Mostrar/ocultar flecha arriba basado en el scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    scrollArrowUp.classList.add('visible');
+                } else {
+                    scrollArrowUp.classList.remove('visible');
+                }
+            });
+
+            // Función de scroll suave para la flecha abajo
+            document.querySelector('.scroll-arrow-down').addEventListener('click', () => {
+                window.scrollTo({
+                    top: window.innerHeight,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Función de scroll suave para la flecha arriba
+            scrollArrowUp.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        };
+        
     </script>
-    <title>Perfil de Vladimir</title>
+    <title>Vladiceli - Portfolio</title>
 </head>
-
-<body class="bg-gradient-to-r from-blue-800 to-cyan-900 text-white font-sans">
-    <div class="max-w-4xl mx-auto p-6">
-        <!-- Titulo -->
-        <div class="text-center">
-            <h1 class="text-4xl font-bold mb-4">Hello, welcome to my profile!</h1>
-        </div>
-
-        <!-- Card de Perfil -->
-        <div class="bg-white text-gray-900 shadow-lg rounded-xl p-6 flex flex-col items-center">
-            <img class="mb-4 w-32 h-32 rounded-full border-4 border-blue-500 shadow-xl" src="perfil.jpg" alt="Perfil de Vladimir" />
-            <h2 class="text-2xl font-semibold mb-2">Vladimir Abelardo Celi Alvarez</h2>
-            <p class="text-lg mb-4">Computer Science Student | Age: <span id="age">...</span> years old</p>
-            <div class="flex space-x-4 mb-4">
-                <a href="https://github.com/vladimirCeli" class="text-white bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2">
-                    <i class="fa-brands fa-github"></i> GitHub
+<body class="text-white">
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center bg-[#0f0f0f] relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-transparent"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <img class="w-40 h-40 rounded-full mx-auto mb-8 glow" src="perfil.jpg" alt="Vladimir Profile">
+            <h1 class="text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+                Vladimir Abelardo Celi Alvarez
+            </h1>
+            <p class="text-2xl text-gray-300 mb-8">Computer Science Graduate | Age: <span id="age">...</span></p>
+            <div class="flex justify-center gap-6">
+                <a href="https://github.com/vladimirCeli" class="px-8 py-3 bg-blue-600 rounded-full font-bold hover:bg-blue-700 transition-all">
+                    <i class="fab fa-github mr-2"></i>GitHub
                 </a>
-                <a href="mailto:vladimirCeli@unl.edu.ec" class="text-white bg-gray-800 hover:bg-gray-900 rounded-lg px-4 py-2">
-                    <i class="fa-solid fa-envelope"></i> Email
+                <a href="mailto:vladiceli6@gmail.com" class="px-8 py-3 bg-gray-800 rounded-full font-bold hover:bg-gray-700 transition-all">
+                    <i class="fas fa-envelope mr-2"></i>Email
                 </a>
             </div>
         </div>
-
-        <!-- Sección Acerca de Mí -->
-        <div class="mt-10">
-            <h2 class="text-3xl font-semibold mb-4">About Me</h2>
-            <p class="text-lg">
-                Hello, I am <strong>21 years old</strong> (dynamic age calculated). I am pursuing a degree in Computer Science Engineering at the National University of Loja. I am passionate about technology and eager to continue learning, grow my skills, and contribute to innovative projects in the tech world.
-            </p>
+        <div class="scroll-arrow-down text-blue-500 text-4xl">
+            <i class="fas fa-chevron-down"></i>
         </div>
+    </section>
 
-        <!-- Sección de Habilidades -->
-        <div class="mt-10">
-            <h2 class="text-3xl font-semibold mb-4">My Skills</h2>
-            <div class="flex flex-wrap gap-4">
-                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">Java</span>
-                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">JavaScript</span>
-                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">Python</span>
-                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">C/C++</span>
-                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">HTML</span>
-                <span class="bg-blue-500 text-white px-4 py-2 rounded-full">CSS</span>
+    <!-- About Section -->
+    <section class="py-20 bg-[#080808]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+                About Me
+            </h2>
+            <div class="max-w-3xl mx-auto text-center animate-on-scroll">
+                <p class="text-xl text-gray-300 leading-relaxed">
+                    Hello, I am <span class="text-blue-400 font-bold">Vladiceli</span>. I have graduated with a degree in Computer Science Engineering from the National University of Loja. I am passionate about technology, always learning, and eager to contribute to innovative projects.
+                </p>
             </div>
         </div>
+    </section>
 
-        <!-- Sección de Intereses -->
-        <div class="mt-10">
-            <h2 class="text-3xl font-semibold mb-4">Interests</h2>
-            <div class="flex flex-wrap gap-4">
-                <span class="bg-green-500 text-white px-4 py-2 rounded-full">Software Development</span>
-                <span class="bg-green-500 text-white px-4 py-2 rounded-full">IoT (Internet of Things)</span>
-                <span class="bg-green-500 text-white px-4 py-2 rounded-full">AI (Artificial Intelligence)</span>
-                <span class="bg-green-500 text-white px-4 py-2 rounded-full">Data Mining</span>
+    <!-- Skills Section -->
+    <section class="py-20 bg-[#0f0f0f]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+                My Skills
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fab fa-java text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Java</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fab fa-js text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">JavaScript</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fas fa-code text-4xl text-purple-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Erlang</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fab fa-python text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Python</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fas fa-code text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">C/C++</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fab fa-vuejs text-4xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Vue.js</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fab fa-react text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="text-xl font-bold">Next.js</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fas fa-bolt text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Vite</h3>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fas fa-database text-4xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">MongoDB</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fas fa-database text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">PostgreSQL</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fas fa-database text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">MySQL</h3>
+                </div>
+                <div class="skill-card p-6 rounded-xl text-center animate-on-scroll">
+                    <i class="fas fa-cube text-4xl text-purple-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">PayloadCMS</h3>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- Redes Sociales -->
-        <div class="mt-10">
-            <h2 class="text-3xl font-semibold mb-4">Social Networks</h2>
-            <div class="flex space-x-4 justify-center">
-                <a href="https://wa.me/593986597167" class="text-green-500 hover:text-green-600"><i class="fa-brands fa-whatsapp fa-2x"></i></a>
-                <a href="https://es-la.facebook.com/26CELI" class="text-blue-600 hover:text-blue-700"><i class="fa-brands fa-facebook fa-2x"></i></a>
-                <a href="https://www.youtube.com/channel/UC4hggU9YdGJKEsL0qtgctmQ" class="text-red-600 hover:text-red-700"><i class="fa-brands fa-youtube fa-2x"></i></a>
+    <!-- Interests Section -->
+    <section class="py-20 bg-[#080808]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">
+                Interests
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="interest-card p-8 rounded-xl text-center animate-on-scroll neon-border">
+                    <i class="fas fa-code text-5xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Software Development</h3>
+                </div>
+                <div class="interest-card p-8 rounded-xl text-center animate-on-scroll neon-border">
+                    <i class="fas fa-microchip text-5xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">IoT</h3>
+                </div>
+                <div class="interest-card p-8 rounded-xl text-center animate-on-scroll neon-border">
+                    <i class="fas fa-brain text-5xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Artificial Intelligence</h3>
+                </div>
+                <div class="interest-card p-8 rounded-xl text-center animate-on-scroll neon-border">
+                    <i class="fas fa-database text-5xl text-green-500 mb-4"></i>
+                    <h3 class="text-xl font-bold">Data Mining</h3>
+                </div>
             </div>
         </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="py-20 bg-[#0f0f0f]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-600">
+                Social Networks
+            </h2>
+            <div class="flex justify-center items-center gap-12 flex-wrap">
+                <a href="https://wa.me/593986597167" class="social-icon text-5xl text-green-500 hover:text-green-400">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://es-la.facebook.com/26CELI" class="social-icon text-5xl text-blue-600 hover:text-blue-500">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UC4hggU9YdGJKEsL0qtgctmQ" class="social-icon text-5xl text-red-600 hover:text-red-500">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.instagram.com/vladimirceli" class="social-icon text-5xl text-purple-600 hover:text-purple-500">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://x.com/vladiceli8" class="social-icon text-5xl text-blue-400 hover:text-blue-300">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="scroll-arrow-up text-blue-500 text-2xl">
+        <i class="fas fa-chevron-up"></i>
     </div>
 
-    <!-- Pie de Página -->
-    <footer class="bg-gray-900 text-center text-white py-4 mt-10">
-        <p>&copy; 2025 Vladimir Abelardo Celi Alvarez. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="py-8 bg-[#080808] text-center">
+        <p class="text-gray-400">&copy; 2025 Vladimir Abelardo Celi Alvarez. All rights reserved.</p>
     </footer>
 </body>
-
 </html>
