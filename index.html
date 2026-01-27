@@ -57,40 +57,6 @@
             100% { background-position: 60px 60px; }
         }
 
-        /* Profile image */
-        .profile-container {
-            position: relative;
-            width: 180px;
-            height: 180px;
-        }
-
-        .profile-ring {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, #3b82f6, #1e40af, #3b82f6);
-            animation: spin 8s linear infinite;
-        }
-
-        .profile-ring-inner {
-            position: absolute;
-            inset: 2px;
-            border-radius: 50%;
-            background: #09090b;
-        }
-
-        .profile-img {
-            position: absolute;
-            inset: 4px;
-            border-radius: 50%;
-            object-fit: cover;
-            z-index: 10;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
 
         /* Floating animation */
         .float {
@@ -439,19 +405,11 @@
         <div class="grid-bg absolute inset-0"></div>
 
         <div class="container mx-auto px-6 text-center relative z-10">
-            <!-- Profile -->
-            <div class="profile-container mx-auto mb-10 float">
-                <div class="profile-ring"></div>
-                <div class="profile-ring-inner"></div>
-                <img class="profile-img" src="perfil.jpg" alt="Vladimir Celi">
-            </div>
-
             <!-- Name & Title -->
             <div class="mb-8">
                 <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-3 text-gradient">
-                    Vladimir Celi
+                    vladimirCeli
                 </h1>
-                <p class="text-zinc-500 text-lg mb-6">Vladimir Abelardo Celi Alvarez</p>
 
                 <div class="flex items-center justify-center gap-3 mb-4">
                     <div class="line-decoration"></div>
