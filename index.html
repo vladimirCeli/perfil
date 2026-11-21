@@ -1,712 +1,386 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>Vladimir Celi - Portfolio</title>
-    <style>
-        * {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: #09090b;
-            overflow-x: hidden;
-        }
-
-        /* Subtle animated background */
-        .hero-section {
-            background: #09090b;
-            position: relative;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(ellipse at 20% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        /* Grid background pattern */
-        .grid-bg {
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 60px 60px; }
-        }
-
-
-        /* Floating animation */
-        .float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* Text gradient */
-        .text-gradient {
-            background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Cards */
-        .card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Skill cards */
-        .skill-card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .skill-card:hover::before {
-            opacity: 1;
-        }
-
-        .skill-card:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.2);
-        }
-
-        .skill-card:hover .skill-icon {
-            transform: scale(1.15);
-            filter: drop-shadow(0 0 8px currentColor);
-        }
-
-        .skill-icon {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Interest cards */
-        .interest-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .interest-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .interest-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .interest-card:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-        }
-
-        .interest-card:hover .interest-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .interest-icon {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.5);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(59, 130, 246, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Social icons */
-        .social-link {
-            width: 56px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .social-link:hover {
-            transform: translateY(-6px) scale(1.1);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
-        }
-
-        .social-link:hover i {
-            transform: scale(1.1);
-        }
-
-        .social-link i {
-            transition: transform 0.3s ease;
-        }
-
-        /* Scroll animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-
-        /* Section title */
-        .section-title {
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-            border-radius: 2px;
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            cursor: pointer;
-        }
-
-        .scroll-indicator .mouse {
-            width: 26px;
-            height: 42px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 13px;
-            position: relative;
-        }
-
-        .scroll-indicator .wheel {
-            width: 4px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 2px;
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: scroll 2s ease-in-out infinite;
-        }
-
-        @keyframes scroll {
-            0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            50% { opacity: 0.3; transform: translateX(-50%) translateY(12px); }
-        }
-
-        /* Scroll to top button */
-        .scroll-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            border-radius: 50%;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
-            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.5);
-        }
-
-        .scroll-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px -10px rgba(37, 99, 235, 0.6);
-        }
-
-        /* Typing animation */
-        .typing {
-            border-right: 2px solid #3b82f6;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { border-color: #3b82f6; }
-            51%, 100% { border-color: transparent; }
-        }
-
-        /* Line decoration */
-        .line-decoration {
-            width: 80px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #09090b;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3f3f46;
-        }
-
-        /* Stagger animation for children */
-        .stagger-children > * {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .stagger-children.active > *:nth-child(1) { animation: fadeUp 0.6s 0.1s forwards; }
-        .stagger-children.active > *:nth-child(2) { animation: fadeUp 0.6s 0.2s forwards; }
-        .stagger-children.active > *:nth-child(3) { animation: fadeUp 0.6s 0.3s forwards; }
-        .stagger-children.active > *:nth-child(4) { animation: fadeUp 0.6s 0.4s forwards; }
-        .stagger-children.active > *:nth-child(5) { animation: fadeUp 0.6s 0.5s forwards; }
-
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Pulse animation for icons */
-        .pulse-hover:hover {
-            animation: pulse 0.6s ease;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vladimir Celi · Software Engineer · Elixir &amp; Erlang/OTP</title>
+  <meta name="description" content="Vladimir Celi, Computer Science Engineer from Ecuador specialized in software architecture and fault-tolerant backends with Elixir and Erlang/OTP. Creator of Jobcelis.">
+  <meta name="author" content="Vladimir Celi Alvarez">
+  <meta name="theme-color" content="#050b18">
+  <link rel="canonical" href="https://vladimirceli.github.io/perfil/">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Vladimir Celi · Software Engineer · Elixir &amp; Erlang/OTP">
+  <meta property="og:description" content="Fault-tolerant backends, software architecture and distributed systems. Creator of Jobcelis.">
+  <meta property="og:url" content="https://vladimirceli.github.io/perfil/">
+  <meta property="og:image" content="https://vladimirceli.github.io/perfil/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="627">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Vladimir Celi Alvarez",
+    "url": "https://vladimirceli.github.io/perfil/",
+    "image": "https://vladimirceli.github.io/perfil/assets/vladimir.jpg",
+    "jobTitle": "Software Engineer",
+    "worksFor": { "@type": "Organization", "name": "Formos" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Universidad Nacional de Loja" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Loja", "addressCountry": "EC" },
+    "knowsAbout": ["Elixir", "Erlang/OTP", "Software architecture", "Distributed systems", "Webhooks", "OWASP"],
+    "sameAs": [
+      "https://www.linkedin.com/in/vladimir-celi-b8a237186/",
+      "https://github.com/vladimirCeli",
+      "https://orcid.org/0009-0003-4231-5692",
+      "https://jobcelis.com"
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20261121">
+  <script>
+    /* Apply the saved theme before first paint to avoid a flash. */
+    try {
+      var t = localStorage.getItem('vc-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      else if (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) document.documentElement.setAttribute('data-theme', 'light');
+    } catch (e) {}
+  </script>
 </head>
-<body class="text-white antialiased">
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center hero-section relative">
-        <div class="grid-bg absolute inset-0"></div>
+<body>
+  <!-- Icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+      <symbol id="i-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+      <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+      <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></symbol>
+      <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></symbol>
+      <symbol id="i-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><path d="M9.75 15.02l5.75-3.27-5.75-3.27v6.54z"/></symbol>
+      <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20"/></symbol>
+      <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    </defs>
+  </svg>
 
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <!-- Name & Title -->
-            <div class="mb-8">
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-3 text-gradient">
-                    vladimirCeli
-                </h1>
+  <a class="skip" href="#main" data-i18n="ui.skip">Skip to content</a>
+  <canvas id="bg" aria-hidden="true"></canvas>
 
-                <div class="flex items-center justify-center gap-3 mb-4">
-                    <div class="line-decoration"></div>
-                    <p class="text-xl md:text-2xl font-medium text-white">Computer Science Engineer</p>
-                    <div class="line-decoration"></div>
-                </div>
+  <!-- Header -->
+  <header class="site-header" id="top">
+    <div class="wrap header-in">
+      <a href="#top" class="brand" aria-label="Vladimir Celi">
+        <img src="assets/vladimir-sm.jpg" alt="" width="34" height="34">
+        <span>vladimir<b>.celi</b></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#experience" data-i18n="nav.experience">Experience</a>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
+        <a href="#credentials" data-i18n="nav.credentials">Credentials</a>
+        <a href="#play" data-i18n="nav.play">Play</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <div class="tools">
+        <button class="btn-icon lang" id="langBtn" type="button" data-i18n-attr="aria-label:ui.lang" aria-label="Switch language"><span id="langLabel">ES</span></button>
+        <button class="btn-icon" id="themeBtn" type="button" data-i18n-attr="aria-label:ui.theme" aria-label="Toggle light/dark theme">
+          <svg class="ic ic-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+          <svg class="ic ic-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+        </button>
+        <button class="btn-icon burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" data-i18n-attr="aria-label:ui.menu" aria-label="Menu">
+          <svg class="ic ic-open" aria-hidden="true"><use href="#i-menu"/></svg>
+          <svg class="ic ic-close" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
 
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 text-zinc-400">
-                    <span class="flex items-center gap-2">
-                        <i class="fas fa-graduation-cap text-blue-500"></i>
-                        National University of Loja
-                    </span>
-                    <span class="hidden sm:block text-zinc-600">|</span>
-                    <span class="flex items-center gap-2">
-                        <i class="fas fa-user text-blue-500"></i>
-                        Age: <span id="age" class="text-white font-medium">...</span>
-                    </span>
-                </div>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="https://github.com/vladimirCeli" target="_blank" rel="noopener noreferrer"
-                   class="btn-primary px-7 py-3.5 rounded-lg font-medium text-white flex items-center gap-2.5">
-                    <i class="fab fa-github text-lg"></i>
-                    GitHub
-                </a>
-                <a href="mailto:vladiceli6@gmail.com"
-                   class="btn-secondary px-7 py-3.5 rounded-lg font-medium text-white flex items-center gap-2.5">
-                    <i class="fas fa-envelope text-lg"></i>
-                    Contact
-                </a>
-                <a href="https://www.linkedin.com/in/vladimir-celi-b8a237186" target="_blank" rel="noopener noreferrer"
-                   class="btn-secondary px-7 py-3.5 rounded-lg font-medium text-white flex items-center gap-2.5">
-                    <i class="fab fa-linkedin text-lg"></i>
-                    LinkedIn
-                </a>
-            </div>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Hello, I am</span></p>
+          <h1 id="hero-title">Vladimir <span class="grad">Celi</span></h1>
+          <p class="role" aria-live="off"><span id="typed">Software Engineer</span><span class="caret" aria-hidden="true"></span></p>
+          <p class="lead" data-i18n="hero.summary">I design and build resilient backends that keep working when things fail, and I enjoy turning real problems into reliable software that helps people.</p>
+          <div class="cta">
+            <a class="btn btn-primary" id="cvBtn" href="cv/CV-Vladimir-Celi-EN.pdf" download>
+              <svg class="ic" aria-hidden="true"><use href="#i-download"/></svg><span data-i18n="hero.cv">Download CV</span>
+            </a>
+            <a class="btn btn-ghost" href="#projects"><span data-i18n="hero.work">See my work</span></a>
+            <a class="btn btn-ghost" href="#contact"><span data-i18n="hero.contact">Contact me</span></a>
+          </div>
+          <ul class="social" aria-label="Social">
+            <li><a href="https://github.com/vladimirCeli" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a></li>
+            <li><a href="https://www.linkedin.com/in/vladimir-celi-b8a237186/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="ic" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+            <li><a href="https://orcid.org/0009-0003-4231-5692" target="_blank" rel="noopener noreferrer" aria-label="ORCID"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></a></li>
+            <li><a href="https://www.freelancer.ec/u/vladimirceli" target="_blank" rel="noopener noreferrer" aria-label="Freelancer"><svg class="ic" aria-hidden="true"><use href="#i-briefcase"/></svg></a></li>
+          </ul>
+          <p class="status"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="hero.status">Loja, Ecuador · Remote &amp; on-site</span></p>
         </div>
 
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator" id="scrollDown">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
+        <div class="hero-visual">
+          <figure class="code-win" aria-label="Elixir supervisor example">
+            <div class="code-bar"><i></i><i></i><i></i><span>vladimir_celi.ex</span></div>
+<pre class="code" id="code" aria-hidden="true"></pre>
+            <figcaption class="code-cap" data-i18n="hero.codeCaption">let it crash, then recover</figcaption>
+          </figure>
+          <div class="avatar" id="avatar">
+            <img src="assets/vladimir.jpg" alt="Vladimir Celi" width="240" height="240" fetchpriority="high">
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- About Section -->
-    <section class="py-28 bg-gradient-to-b from-[#09090b] via-[#0c0c0f] to-[#09090b]">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold mb-20 text-center">
-                <span class="section-title text-gradient">About Me</span>
-            </h2>
-
-            <div class="max-w-4xl mx-auto reveal">
-                <div class="card p-10 md:p-12 rounded-2xl">
-                    <div class="flex flex-col md:flex-row items-center gap-10">
-                        <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-600/20 to-blue-800/20 flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-terminal text-4xl text-blue-500"></i>
-                        </div>
-                        <div class="text-center md:text-left">
-                            <p class="text-xl text-zinc-300 leading-relaxed mb-5">
-                                Hi, I'm <span class="text-white font-semibold">Vladimir</span>, a Computer Science Engineer graduated from the <span class="text-blue-400 font-medium">National University of Loja</span>.
-                            </p>
-                            <p class="text-lg text-zinc-500 leading-relaxed">
-                                Passionate about technology and software development. Always learning and ready to contribute to innovative projects that create real impact. I love exploring new technologies and building solutions that matter.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Stats -->
+    <section class="stats wrap" aria-label="Highlights">
+      <div class="stat"><b data-count="12">12</b><span data-i18n="stats.sdks">official SDKs in Jobcelis</span></div>
+      <div class="stat"><b data-count="400" data-prefix="~">~400</b><span data-i18n="stats.tests">automated tests in Jobcelis</span></div>
+      <div class="stat"><b data-count="7">7</b><span data-i18n="stats.certs">verifiable certificates</span></div>
+      <div class="stat"><b data-count="0" id="repoCount">–</b><span data-i18n="stats.repos">public GitHub repos</span></div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="py-28 bg-[#09090b]">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold mb-20 text-center">
-                <span class="section-title text-gradient">Tech Stack</span>
-            </h2>
-
-            <!-- Languages -->
-            <div class="mb-16">
-                <h3 class="text-xl font-semibold text-center mb-10 text-zinc-400 flex items-center justify-center gap-3">
-                    <i class="fas fa-code text-blue-500"></i>
-                    Languages
-                </h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 stagger-children" id="languages">
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fab fa-java skill-icon text-4xl text-orange-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">Java</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fab fa-js-square skill-icon text-4xl text-yellow-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">JavaScript</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fab fa-python skill-icon text-4xl text-sky-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">Python</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fas fa-copyright skill-icon text-4xl text-blue-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">C/C++</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fas fa-code skill-icon text-4xl text-red-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">Erlang</h4>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Frameworks -->
-            <div class="mb-16">
-                <h3 class="text-xl font-semibold text-center mb-10 text-zinc-400 flex items-center justify-center gap-3">
-                    <i class="fas fa-layer-group text-blue-500"></i>
-                    Frameworks & Tools
-                </h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-4xl mx-auto stagger-children" id="frameworks">
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fab fa-vuejs skill-icon text-4xl text-emerald-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">Vue.js</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fab fa-react skill-icon text-4xl text-cyan-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">Next.js</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fas fa-bolt skill-icon text-4xl text-violet-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">Vite</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fas fa-cube skill-icon text-4xl text-indigo-400 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">PayloadCMS</h4>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Databases -->
-            <div>
-                <h3 class="text-xl font-semibold text-center mb-10 text-zinc-400 flex items-center justify-center gap-3">
-                    <i class="fas fa-database text-blue-500"></i>
-                    Databases
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto stagger-children" id="databases">
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fas fa-leaf skill-icon text-4xl text-green-500 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">MongoDB</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fas fa-database skill-icon text-4xl text-sky-500 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">PostgreSQL</h4>
-                    </div>
-                    <div class="skill-card p-6 rounded-xl text-center">
-                        <i class="fas fa-server skill-icon text-4xl text-amber-500 mb-4 block"></i>
-                        <h4 class="font-semibold text-zinc-300">MySQL</h4>
-                    </div>
-                </div>
-            </div>
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="wrap">
+        <h2 class="sec-title" data-i18n="about.title">About me</h2>
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <p data-i18n-html="about.p1"></p>
+            <p data-i18n-html="about.p2"></p>
+            <p data-i18n-html="about.p3"></p>
+          </div>
+          <div class="cards" id="aboutCards"></div>
         </div>
+      </div>
     </section>
 
-    <!-- Interests Section -->
-    <section class="py-28 bg-gradient-to-b from-[#09090b] via-[#0c0c0f] to-[#09090b]">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold mb-20 text-center">
-                <span class="section-title text-gradient">Interests</span>
-            </h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children" id="interests">
-                <div class="interest-card p-8 rounded-2xl text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                        <i class="fas fa-laptop-code interest-icon text-3xl text-blue-400"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Software Development</h3>
-                    <p class="text-zinc-500 text-sm">Building innovative solutions</p>
-                </div>
-                <div class="interest-card p-8 rounded-2xl text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-                        <i class="fas fa-microchip interest-icon text-3xl text-emerald-400"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">IoT</h3>
-                    <p class="text-zinc-500 text-sm">Connecting the physical world</p>
-                </div>
-                <div class="interest-card p-8 rounded-2xl text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-xl bg-violet-500/10 flex items-center justify-center">
-                        <i class="fas fa-brain interest-icon text-3xl text-violet-400"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Artificial Intelligence</h3>
-                    <p class="text-zinc-500 text-sm">Exploring machine learning</p>
-                </div>
-                <div class="interest-card p-8 rounded-2xl text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                        <i class="fas fa-chart-bar interest-icon text-3xl text-amber-400"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Data Mining</h3>
-                    <p class="text-zinc-500 text-sm">Discovering hidden patterns</p>
-                </div>
-            </div>
-        </div>
+    <!-- Experience -->
+    <section id="experience" class="section alt">
+      <div class="wrap">
+        <h2 class="sec-title" data-i18n="exp.title">Experience</h2>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
     </section>
 
-    <!-- Social Section -->
-    <section class="py-28 bg-[#09090b]">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold mb-20 text-center">
-                <span class="section-title text-gradient">Let's Connect</span>
-            </h2>
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="wrap">
+        <h2 class="sec-title" data-i18n="projects.title">Projects</h2>
 
-            <div class="flex justify-center items-center gap-5 flex-wrap reveal">
-                <!-- <a href="https://wa.me/593986597167" target="_blank" rel="noopener noreferrer"
-                   class="social-link text-2xl text-green-500 hover:bg-green-500/10">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://es-la.facebook.com/26CELI" target="_blank" rel="noopener noreferrer"
-                   class="social-link text-2xl text-blue-500 hover:bg-blue-500/10">
-                    <i class="fab fa-facebook-f"></i>
-                </a> -->
-                <a href="https://www.youtube.com/channel/UC4hggU9YdGJKEsL0qtgctmQ" target="_blank" rel="noopener noreferrer"
-                   class="social-link text-2xl text-red-500 hover:bg-red-500/10">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="https://www.instagram.com/vladimirceli" target="_blank" rel="noopener noreferrer"
-                   class="social-link text-2xl text-pink-500 hover:bg-pink-500/10">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://x.com/vladiceli8" target="_blank" rel="noopener noreferrer"
-                   class="social-link text-2xl text-zinc-400 hover:bg-zinc-400/10">
-                    <i class="fab fa-twitter"></i>
-                </a>
+        <article class="feature reveal">
+          <div class="feature-copy">
+            <p class="tag" data-i18n="projects.featured">Featured project</p>
+            <h3>Jobcelis</h3>
+            <p class="muted" data-i18n="projects.jobcelisSub">Webhook &amp; event delivery platform · creator</p>
+            <p data-i18n="projects.jobcelisDesc"></p>
+            <ul class="ticks" id="jobcelisPoints"></ul>
+            <div class="cta">
+              <a class="btn btn-primary" href="https://jobcelis.com" target="_blank" rel="noopener noreferrer"><span data-i18n="projects.visit">Visit jobcelis.com</span><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
+              <a class="btn btn-ghost" href="https://github.com/jobcelis-team" target="_blank" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg><span data-i18n="projects.source">Source on GitHub</span></a>
             </div>
+          </div>
+          <div class="flow-box">
+            <ol class="flow" id="flow"></ol>
+            <p class="flow-cap" data-i18n="projects.flowCaption">How an event travels through Jobcelis</p>
+          </div>
+        </article>
+
+        <div class="repos-head">
+          <div>
+            <h3 data-i18n="projects.reposTitle">Live from GitHub</h3>
+            <p class="muted" data-i18n="projects.reposSub">Public repositories, fetched right now from the GitHub API.</p>
+          </div>
+          <a class="link" href="https://github.com/vladimirCeli?tab=repositories" target="_blank" rel="noopener noreferrer"><span data-i18n="projects.allRepos">See all repositories</span><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
         </div>
+        <div class="repos" id="repos" aria-live="polite"><p class="muted" data-i18n="projects.loading">Loading repositories…</p></div>
+      </div>
     </section>
 
-    <!-- Scroll to Top -->
-    <button class="scroll-top" id="scrollTop">
-        <i class="fas fa-arrow-up text-white"></i>
-    </button>
+    <!-- Skills -->
+    <section id="skills" class="section alt">
+      <div class="wrap">
+        <h2 class="sec-title" data-i18n="skills.title">Skills</h2>
+        <div class="skills" id="skillsGrid"></div>
+      </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="py-10 bg-[#050507] border-t border-zinc-900">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-zinc-500 mb-2">
-                Vladimir Abelardo Celi Alvarez
-            </p>
-            <p class="text-zinc-600 text-sm">
-                &copy; <span id="year"></span> All rights reserved.
-            </p>
+    <!-- Credentials -->
+    <section id="credentials" class="section">
+      <div class="wrap">
+        <h2 class="sec-title" data-i18n="cred.title">Credentials</h2>
+        <p class="sec-sub" data-i18n="cred.subtitle">Everything here can be verified independently.</p>
+
+        <article class="pub reveal">
+          <p class="tag" data-i18n="pub.title">Publication</p>
+          <h3 id="pubTitle"></h3>
+          <p class="muted" data-i18n="pub.journal"></p>
+          <p data-i18n="pub.summary"></p>
+          <div class="cta">
+            <a class="btn btn-primary" href="https://doi.org/10.23857/pc.v10i9.10338" target="_blank" rel="noopener noreferrer"><span data-i18n="pub.read">Read the article (DOI)</span><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
+            <a class="btn btn-ghost" href="https://orcid.org/0009-0003-4231-5692" target="_blank" rel="noopener noreferrer"><span data-i18n="pub.orcid">ORCID profile</span><svg class="ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
+          </div>
+        </article>
+
+        <div class="cred-grid">
+          <div>
+            <h3 class="sub-title" data-i18n="cred.certs">Certifications</h3>
+            <ul class="certs" id="certs"></ul>
+          </div>
+          <div>
+            <h3 class="sub-title" data-i18n="cred.edu">Education</h3>
+            <ul class="edu" id="edu"></ul>
+            <p class="muted small" data-i18n="cred.onRequest">Supporting documents are available on request.</p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Calculate age
-            const birthDate = new Date(2001, 0, 8);
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            if (today.getMonth() < birthDate.getMonth() ||
-                (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            document.getElementById('age').textContent = age;
-            document.getElementById('year').textContent = today.getFullYear();
+    <!-- Play -->
+    <section id="play" class="section alt">
+      <div class="wrap">
+        <h2 class="sec-title" data-i18n="play.title">Play</h2>
+        <p class="sec-sub" data-i18n="play.subtitle">Three small games built from scratch.</p>
 
-            // Scroll reveal animation
-            const revealElements = document.querySelectorAll('.reveal, .stagger-children');
+        <div class="game-card">
+          <div class="tabs" role="tablist" id="gameTabs">
+            <button role="tab" id="tab-snake" aria-controls="panel-snake" aria-selected="true" data-game="snake" type="button" data-i18n="play.tabs.snake">Snake</button>
+            <button role="tab" id="tab-memory" aria-controls="panel-memory" aria-selected="false" tabindex="-1" data-game="memory" type="button" data-i18n="play.tabs.memory">Memory</button>
+            <button role="tab" id="tab-crash" aria-controls="panel-crash" aria-selected="false" tabindex="-1" data-game="crash" type="button" data-i18n="play.tabs.crash">Let it crash</button>
+          </div>
 
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+          <!-- Snake -->
+          <div class="panel" id="panel-snake" role="tabpanel" aria-labelledby="tab-snake">
+            <div class="hud">
+              <span><small data-i18n="play.score">Score</small><b id="snakeScore">0</b></span>
+              <span><small data-i18n="play.best">Best</small><b id="snakeBest">0</b></span>
+              <button class="btn btn-ghost sm" id="snakePause" type="button" hidden><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg><span data-i18n="play.pause">Pause</span></button>
+            </div>
+            <div class="board-wrap">
+              <canvas id="snakeCanvas" width="360" height="360" tabindex="0" aria-label="Snake board"></canvas>
+              <div class="overlay" id="snakeOverlay">
+                <p id="snakeMsg"></p>
+                <button class="btn btn-primary" id="snakeStart" type="button" data-i18n="play.start">Start</button>
+              </div>
+            </div>
+            <div class="dpad" aria-hidden="true">
+              <button type="button" data-dir="up" tabindex="-1"><svg class="ic" style="transform:rotate(0deg)"><use href="#i-up"/></svg></button>
+              <button type="button" data-dir="left" tabindex="-1"><svg class="ic" style="transform:rotate(-90deg)"><use href="#i-up"/></svg></button>
+              <button type="button" data-dir="right" tabindex="-1"><svg class="ic" style="transform:rotate(90deg)"><use href="#i-up"/></svg></button>
+              <button type="button" data-dir="down" tabindex="-1"><svg class="ic" style="transform:rotate(180deg)"><use href="#i-up"/></svg></button>
+            </div>
+            <p class="help" data-i18n="play.snakeHelp"></p>
+          </div>
 
-            revealElements.forEach(el => revealObserver.observe(el));
+          <!-- Memory -->
+          <div class="panel" id="panel-memory" role="tabpanel" aria-labelledby="tab-memory" hidden>
+            <div class="hud">
+              <span><small data-i18n="play.moves">Moves</small><b id="memMoves">0</b></span>
+              <span><small data-i18n="play.time">Time</small><b id="memTime">0s</b></span>
+              <span><small data-i18n="play.best">Best</small><b id="memBest">–</b></span>
+              <button class="btn btn-ghost sm" id="memReset" type="button" data-i18n="play.again">Play again</button>
+            </div>
+            <div class="memory" id="memGrid"></div>
+            <p class="help" id="memMsg" role="status"></p>
+            <p class="help" data-i18n="play.memoryHelp"></p>
+          </div>
 
-            // Scroll to top button
-            const scrollTopBtn = document.getElementById('scrollTop');
+          <!-- Let it crash -->
+          <div class="panel" id="panel-crash" role="tabpanel" aria-labelledby="tab-crash" hidden>
+            <div class="hud">
+              <span><small data-i18n="play.lives">Lives</small><b id="crLives" aria-live="polite">♥♥♥</b></span>
+              <span><small data-i18n="play.restarts">Restarts</small><b id="crScore">0</b></span>
+              <span><small data-i18n="play.best">Best</small><b id="crBest">0</b></span>
+            </div>
+            <div class="board-wrap crash-wrap">
+              <div class="workers" id="workers"></div>
+              <div class="overlay" id="crOverlay">
+                <p id="crMsg"></p>
+                <button class="btn btn-primary" id="crStart" type="button" data-i18n="play.start">Start</button>
+              </div>
+            </div>
+            <p class="help" data-i18n="play.crashHelp"></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 500) {
-                    scrollTopBtn.classList.add('visible');
-                } else {
-                    scrollTopBtn.classList.remove('visible');
-                }
-            });
+    <!-- Terminal -->
+    <section id="terminal" class="section">
+      <div class="wrap narrow">
+        <h2 class="sec-title" data-i18n="term.title">Terminal</h2>
+        <p class="sec-sub" data-i18n="term.subtitle">Prefer the keyboard? Type help.</p>
+        <div class="term" id="term">
+          <div class="term-bar"><i></i><i></i><i></i><span>vladimir@perfil: ~</span><em data-i18n="term.hint">Tab completes · ↑ ↓ history</em></div>
+          <div class="term-out" id="termOut" role="log" aria-live="polite"></div>
+          <form class="term-in" id="termForm" autocomplete="off">
+            <label for="termInput" class="prompt">$</label>
+            <input id="termInput" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Terminal command">
+          </form>
+        </div>
+      </div>
+    </section>
 
-            scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+    <!-- Contact -->
+    <section id="contact" class="section alt">
+      <div class="wrap narrow center">
+        <h2 class="sec-title" data-i18n="contact.title">Let’s talk</h2>
+        <p class="lead" data-i18n="contact.text"></p>
+        <div class="cta center-cta">
+          <a class="btn btn-primary" id="mailBtn" href="mailto:bladimirtutoriales@gmail.com"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span data-i18n="contact.email">Send an email</span></a>
+          <button class="btn btn-ghost" id="copyBtn" type="button"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg><span id="copyLabel" data-i18n="contact.copy">Copy address</span></button>
+        </div>
+        <p class="mail-addr" id="mailAddr">bladimirtutoriales@gmail.com</p>
+        <p class="muted" data-i18n="contact.elsewhere">Find me elsewhere</p>
+        <ul class="social big">
+          <li><a href="https://github.com/vladimirCeli" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg></a></li>
+          <li><a href="https://www.linkedin.com/in/vladimir-celi-b8a237186/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="ic" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+          <li><a href="https://www.freelancer.ec/u/vladimirceli" target="_blank" rel="noopener noreferrer" aria-label="Freelancer"><svg class="ic" aria-hidden="true"><use href="#i-briefcase"/></svg></a></li>
+          <li><a href="https://www.youtube.com/channel/UC4hggU9YdGJKEsL0qtgctmQ" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg class="ic" aria-hidden="true"><use href="#i-youtube"/></svg></a></li>
+          <li><a href="https://www.instagram.com/vladimirceli" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="ic" aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
+          <li><a href="https://x.com/vladiceli8" target="_blank" rel="noopener noreferrer" aria-label="X"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
 
-            // Scroll down indicator
-            document.getElementById('scrollDown').addEventListener('click', () => {
-                window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-            });
-        });
-    </script>
+  <footer class="site-footer">
+    <div class="wrap foot-in">
+      <p><strong>Vladimir Celi Alvarez</strong> · &copy; <span id="year">2026</span> <span data-i18n="footer.rights">All rights reserved.</span></p>
+      <p class="muted small" data-i18n="footer.built">Built by hand with HTML, CSS and JavaScript. No frameworks, no trackers.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Back to top" data-i18n-attr="aria-label:ui.top"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg></button>
+
+  <noscript><p class="noscript">This site works best with JavaScript. You can still reach me: <a href="https://www.linkedin.com/in/vladimir-celi-b8a237186/">LinkedIn</a> · <a href="https://github.com/vladimirCeli">GitHub</a> · <a href="cv/CV-Vladimir-Celi-EN.pdf">CV (EN)</a> · <a href="cv/CV-Vladimir-Celi-ES.pdf">CV (ES)</a></p></noscript>
+
+  <script src="js/content.js?v=20261121"></script>
+  <script src="js/cores.js?v=20261121"></script>
+  <script src="js/main.js?v=20261121"></script>
+  <script src="js/games.js?v=20261121"></script>
+  <script src="js/terminal.js?v=20261121"></script>
 </body>
 </html>
