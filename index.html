@@ -40,7 +40,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261121">
+  <link rel="stylesheet" href="css/style.css?v=20261122">
+  <link rel="stylesheet" href="css/v2.css?v=20261122">
   <script>
     /* Apply the saved theme before first paint to avoid a flash. */
     try {
@@ -84,7 +85,9 @@
   </svg>
 
   <a class="skip" href="#main" data-i18n="ui.skip">Skip to content</a>
+  <div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
   <canvas id="bg" aria-hidden="true"></canvas>
+  <canvas id="gl" aria-hidden="true"></canvas>
 
   <!-- Header -->
   <header class="site-header" id="top">
@@ -141,15 +144,15 @@
           <p class="status"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="hero.status">Loja, Ecuador · Remote &amp; on-site</span></p>
         </div>
 
-        <div class="hero-visual">
-          <figure class="code-win" aria-label="Elixir supervisor example">
-            <div class="code-bar"><i></i><i></i><i></i><span>vladimir_celi.ex</span></div>
-<pre class="code" id="code" aria-hidden="true"></pre>
-            <figcaption class="code-cap" data-i18n="hero.codeCaption">let it crash, then recover</figcaption>
-          </figure>
-          <div class="avatar" id="avatar">
+        <div class="stage" id="stage">
+          <div class="avatar-frame" id="avatar">
             <img src="assets/vladimir.jpg" alt="Vladimir Celi" width="240" height="240" fetchpriority="high">
           </div>
+          <p class="crash-hud" id="crashHud" hidden>
+            <span class="led" aria-hidden="true"></span>
+            <span id="hudText"></span>
+            <button type="button" class="hud-btn" id="crashBtn" data-i18n="hero.hudBtn">crash a node</button>
+          </p>
         </div>
       </div>
     </section>
@@ -171,6 +174,11 @@
             <p data-i18n-html="about.p1"></p>
             <p data-i18n-html="about.p2"></p>
             <p data-i18n-html="about.p3"></p>
+            <figure class="code-win" aria-label="Elixir supervisor example">
+              <div class="code-bar"><i></i><i></i><i></i><span>vladimir_celi.ex</span></div>
+<pre class="code" id="code" aria-hidden="true"></pre>
+              <figcaption class="code-cap" data-i18n="hero.codeCaption">let it crash, then recover</figcaption>
+            </figure>
           </div>
           <div class="cards" id="aboutCards"></div>
         </div>
@@ -223,6 +231,10 @@
     <section id="skills" class="section alt">
       <div class="wrap">
         <h2 class="sec-title" data-i18n="skills.title">Skills</h2>
+        <div class="sphere-wrap">
+          <canvas id="skillSphere" role="img" data-i18n-attr="aria-label:skills.sphereLabel" aria-label="Interactive 3D cloud of my skills"></canvas>
+          <p class="sphere-hint" data-i18n="skills.sphereHint">Drag to spin · hover a word</p>
+        </div>
         <div class="skills" id="skillsGrid"></div>
       </div>
     </section>
@@ -377,10 +389,12 @@
 
   <noscript><p class="noscript">This site works best with JavaScript. You can still reach me: <a href="https://www.linkedin.com/in/vladimir-celi-b8a237186/">LinkedIn</a> · <a href="https://github.com/vladimirCeli">GitHub</a> · <a href="cv/CV-Vladimir-Celi-EN.pdf">CV (EN)</a> · <a href="cv/CV-Vladimir-Celi-ES.pdf">CV (ES)</a></p></noscript>
 
-  <script src="js/content.js?v=20261121"></script>
-  <script src="js/cores.js?v=20261121"></script>
-  <script src="js/main.js?v=20261121"></script>
-  <script src="js/games.js?v=20261121"></script>
-  <script src="js/terminal.js?v=20261121"></script>
+  <script src="js/content.js?v=20261122"></script>
+  <script src="js/cores.js?v=20261122"></script>
+  <script src="js/main.js?v=20261122"></script>
+  <script src="js/games.js?v=20261122"></script>
+  <script src="js/terminal.js?v=20261122"></script>
+  <script src="js/tagsphere.js?v=20261122"></script>
+  <script type="module" src="js/scene3d.js?v=20261122"></script>
 </body>
 </html>

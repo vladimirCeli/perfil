@@ -57,6 +57,8 @@ window.SITE = (function () {
       contact: 'Contact me',
       status: 'Loja, Ecuador · Remote & on-site',
       codeCaption: 'let it crash, then recover',
+      hud: 'supervisor · restarts: {n}',
+      hudBtn: 'crash a node',
     },
     stats: { sdks: 'official SDKs in Jobcelis', tests: 'automated tests in Jobcelis', certs: 'verifiable certificates', repos: 'public GitHub repos' },
     about: {
@@ -115,6 +117,8 @@ window.SITE = (function () {
     },
     skills: {
       title: 'Skills',
+      sphereHint: 'Drag to spin · hover a word',
+      sphereLabel: 'Interactive 3D cloud of my skills',
       groups: { backend: 'Backend & architecture', languages: 'Languages', front: 'Frontend & mobile', data: 'Databases', devops: 'Cloud, DevOps & quality', security: 'Security', ai: 'AI' },
     },
     pub: {
@@ -208,7 +212,7 @@ window.SITE = (function () {
       copyFail: 'Copy failed',
       elsewhere: 'Find me elsewhere',
     },
-    footer: { built: 'Built by hand with HTML, CSS and JavaScript. No frameworks, no trackers.', rights: 'All rights reserved.' },
+    footer: { built: 'Built by hand with HTML, CSS, JavaScript and three.js. No trackers.', rights: 'All rights reserved.' },
   };
 
   const es = {
@@ -227,6 +231,8 @@ window.SITE = (function () {
       contact: 'Contáctame',
       status: 'Loja, Ecuador · Remoto y presencial',
       codeCaption: 'dejar que falle, y luego recuperarse',
+      hud: 'supervisor · reinicios: {n}',
+      hudBtn: 'tumbar un nodo',
     },
     stats: { sdks: 'SDKs oficiales en Jobcelis', tests: 'pruebas automatizadas en Jobcelis', certs: 'certificados verificables', repos: 'repositorios públicos en GitHub' },
     about: {
@@ -285,6 +291,8 @@ window.SITE = (function () {
     },
     skills: {
       title: 'Habilidades',
+      sphereHint: 'Arrastra para girar · pasa el cursor sobre una palabra',
+      sphereLabel: 'Nube 3D interactiva de mis habilidades',
       groups: { backend: 'Backend y arquitectura', languages: 'Lenguajes', front: 'Frontend y móvil', data: 'Bases de datos', devops: 'Nube, DevOps y calidad', security: 'Seguridad', ai: 'IA' },
     },
     pub: {
@@ -378,7 +386,7 @@ window.SITE = (function () {
       copyFail: 'No se pudo copiar',
       elsewhere: 'También me encuentras en',
     },
-    footer: { built: 'Hecho a mano con HTML, CSS y JavaScript. Sin frameworks ni rastreadores.', rights: 'Todos los derechos reservados.' },
+    footer: { built: 'Hecho a mano con HTML, CSS, JavaScript y three.js. Sin rastreadores.', rights: 'Todos los derechos reservados.' },
   };
 
   return { links, certs, skills, i18n: { en, es } };

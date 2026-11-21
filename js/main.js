@@ -227,17 +227,17 @@
 
   // Active link highlighting
   var sections = $$('main section[id]');
-  if ('IntersectionObserver' in window) {
-    var navObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        $$('#nav a').forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    sections.forEach(function (s) { navObs.observe(s); });
+  var navLinks = $$('#nav a');
+  function updateActive() {
+    var line = window.innerHeight * 0.4, cur = '';
+    sections.forEach(function (s) {
+      var r = s.getBoundingClientRect();
+      if (r.top <= line && r.bottom > line) cur = s.id; // none while the hero is on screen
+    });
+    navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
   }
 
-  // Back to top
+  // Back to top + active link (one throttled scroll handler)
   var toTop = $('#toTop');
   var ticking = false;
   window.addEventListener('scroll', function () {
@@ -245,9 +245,12 @@
     ticking = true;
     requestAnimationFrame(function () {
       toTop.classList.toggle('show', window.scrollY > 700);
+      updateActive();
       ticking = false;
     });
   }, { passive: true });
+  window.addEventListener('resize', updateActive);
+  setTimeout(updateActive, 0);
   toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }); });
 
   /* ------------------------------------------------------- reveal on scroll */
@@ -479,10 +482,10 @@
   }
 
   /* -------------------------------------------------------- background net */
-  (function background() {
+  var bgCtl = (function background() {
     var cv = $('#bg');
     var ctx = cv.getContext && cv.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) return { start: function () {}, stop: function () {} };
     var w = 0, h = 0, nodes = [], mouse = { x: -999, y: -999 }, running = false, raf = 0, color = '79,141,255';
 
     function readColor() {
@@ -536,6 +539,44 @@
     document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
     window.addEventListener('themechange', function () { readColor(); draw(false); });
     readColor(); resize(); start();
+    return { start: function () { cv.style.display = ''; start(); }, stop: stop };
+  })();
+
+
+  /* ------------------------------------------------------------ 3D tilt cards */
+  (function tilt() {
+    if (REDUCED || !window.matchMedia || !matchMedia('(hover: hover)').matches) return;
+    var SEL = '.card,.repo,.skill-group,.stat,.job';
+    var cur = null, raf = 0, last = null;
+    function leave() {
+      if (!cur) return;
+      var n = cur; cur = null;
+      n.classList.remove('tilting');
+      n.style.transition = 'transform .55s cubic-bezier(.2,.8,.2,1)';
+      n.style.transform = '';
+      setTimeout(function () { if (n !== cur) n.style.transition = ''; }, 580);
+    }
+    function apply() {
+      raf = 0;
+      if (!cur || !last) return;
+      var r = cur.getBoundingClientRect();
+      var px = Math.min(1, Math.max(0, (last.clientX - r.left) / r.width)), py = Math.min(1, Math.max(0, (last.clientY - r.top) / r.height));
+      cur.style.transform = 'perspective(900px) translateY(-4px) rotateX(' + ((0.5 - py) * 9).toFixed(2) + 'deg) rotateY(' + ((px - 0.5) * 11).toFixed(2) + 'deg)';
+      cur.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+      cur.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+    }
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var el = e.target && e.target.closest ? e.target.closest(SEL) : null;
+      if (el !== cur) {
+        leave();
+        if (el) { cur = el; el.classList.add('tilting'); el.style.transition = 'transform .12s ease-out'; }
+      }
+      last = e;
+      if (cur && !raf) raf = requestAnimationFrame(apply);
+    }, { passive: true });
+    document.documentElement.addEventListener('mouseleave', leave);
+    window.addEventListener('scroll', function () { if (cur) { leave(); } }, { passive: true });
   })();
 
   /* ------------------------------------------------------------------ boot */
@@ -555,5 +596,6 @@
     icon: icon,
     store: store,
     reduced: REDUCED,
+    bg: bgCtl,
   };
 })();

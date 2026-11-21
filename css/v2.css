@@ -1,0 +1,160 @@
+/* ==========================================================================
+   v2 · organic shapes + 3D
+   Loaded after style.css and overrides it on purpose.
+   ========================================================================== */
+@property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+:root {
+  --alt-bg: color-mix(in srgb, var(--bg-2) 80%, transparent);
+  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 40C240 0 480 0 720 40S1200 80 1440 40V80H0Z'/%3E%3C/svg%3E");
+  --squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 10'%3E%3Cpath d='M2 5q5.5-6 11 0t11 0 11 0 11 0 11 0 11 0 11 0 11 0' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* --- layers: the WebGL scene replaces the 2D canvas while it is running --- */
+#gl { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: none; }
+html.gl #gl { display: block; }
+html.gl #bg { display: none; }
+.blobs { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+.blobs i { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.32; animation: drift 28s ease-in-out infinite alternate; }
+.blobs i:nth-child(1) { width: 52vmax; height: 36vmax; left: -14vmax; top: 4vh; background: radial-gradient(closest-side, var(--accent), transparent); }
+.blobs i:nth-child(2) { width: 44vmax; height: 40vmax; right: -12vmax; top: 38vh; background: radial-gradient(closest-side, var(--accent-2), transparent); animation-delay: -9s; animation-duration: 34s; }
+.blobs i:nth-child(3) { width: 38vmax; height: 26vmax; left: 20vw; bottom: -10vh; background: radial-gradient(closest-side, #22d3ee, transparent); animation-delay: -16s; opacity: 0.18; }
+:root[data-theme='light'] .blobs i { opacity: 0.2; }
+@keyframes drift { to { transform: translate3d(6vw, -5vh, 0) scale(1.15) rotate(12deg); } }
+
+/* --- floating capsule header --- */
+html { scroll-padding-top: 92px; }
+.site-header { top: 10px; width: min(1120px, calc(100% - 24px)); margin: 10px auto 0; border: 1px solid var(--border); border-radius: 999px; box-shadow: var(--shadow); }
+.site-header .wrap { padding: 0 12px 0 14px; max-width: none; }
+.header-in { min-height: 58px; }
+.nav a { border-radius: 999px; }
+.btn-icon { border-radius: 999px; }
+@media (max-width: 959px) {
+  .nav { top: calc(100% + 10px); border: 1px solid var(--border); border-radius: 28px; left: 0; right: 0; }
+}
+
+/* --- buttons / shapes --- */
+.btn { border-radius: 999px; }
+.btn.sm { border-radius: 999px; }
+.social a { border-radius: 50%; }
+
+/* --- hero stage: portrait inside a morphing blob, the 3D scene is drawn around it --- */
+.hero { padding-top: clamp(24px, 5vw, 60px); }
+.stage { position: relative; width: min(100%, 520px); aspect-ratio: 1; margin: 0 auto; display: grid; place-items: center; touch-action: manipulation; }
+.avatar-frame {
+  position: relative; width: 46%; aspect-ratio: 1; padding: 5px;
+  background: conic-gradient(from var(--ang), var(--accent), var(--accent-2), #22d3ee, var(--accent));
+  border-radius: 62% 38% 46% 54% / 54% 44% 56% 46%;
+  animation: morph 11s ease-in-out infinite, spin-ang 9s linear infinite;
+  box-shadow: 0 0 70px -10px color-mix(in srgb, var(--accent) 60%, transparent), 0 30px 60px -30px #000;
+  pointer-events: none;
+}
+.avatar-frame img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; border: 5px solid var(--bg); }
+@keyframes morph {
+  0%, 100% { border-radius: 62% 38% 46% 54% / 54% 44% 56% 46%; }
+  25% { border-radius: 42% 58% 60% 40% / 40% 56% 44% 60%; }
+  50% { border-radius: 54% 46% 38% 62% / 62% 38% 62% 38%; }
+  75% { border-radius: 38% 62% 54% 46% / 46% 60% 40% 54%; }
+}
+@keyframes spin-ang { to { --ang: 360deg; } }
+.crash-hud { position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; white-space: nowrap; margin: 0; padding: 7px 8px 7px 14px; font-family: var(--mono); font-size: 0.74rem; color: var(--muted); background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; backdrop-filter: blur(8px); }
+.crash-hud[hidden] { display: none; }
+.crash-hud .led { width: 8px; height: 8px; border-radius: 50%; background: var(--good); box-shadow: 0 0 8px var(--good); }
+.hud-btn { font: inherit; font-size: 0.72rem; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.hud-btn:hover { border-color: var(--bad); color: var(--bad); }
+@media (max-width: 420px) { .crash-hud { font-size: 0.68rem; gap: 6px; padding-left: 10px; } }
+
+@media (max-width: 959px) {
+  .hero-grid { gap: 8px; }
+  .stage { order: -1; width: min(88%, 380px); }
+  .hero-copy { text-align: left; }
+}
+
+/* the code window now lives in "About" */
+.about-text .code-win { margin-top: 26px; max-width: 520px; }
+.code-win { border-radius: 26px; }
+
+/* --- stats as capsules --- */
+.stat { border-radius: 60px; padding: 20px 18px; }
+
+/* --- wavy section edges instead of straight borders --- */
+.section.alt { position: relative; background: var(--alt-bg); border-block: 0; }
+.section.alt::before, .section.alt::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 58px; pointer-events: none; background: var(--alt-bg);
+  -webkit-mask: var(--wave) repeat-x 0 0 / 1440px 100%; mask: var(--wave) repeat-x 0 0 / 1440px 100%;
+  animation: waveSlide 46s linear infinite;
+}
+.section.alt::before { top: -57px; }
+.section.alt::after { bottom: -57px; transform: scaleY(-1); animation-direction: reverse; }
+@keyframes waveSlide { to { -webkit-mask-position: -1440px 0; mask-position: -1440px 0; } }
+
+/* --- squiggle under section titles --- */
+.sec-title::after {
+  width: 96px; height: 10px; border-radius: 0; margin-top: 10px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-mask: var(--squiggle) no-repeat left center / 96px 10px; mask: var(--squiggle) no-repeat left center / 96px 10px;
+}
+.center .sec-title::after { -webkit-mask-position: center; mask-position: center; }
+
+/* --- organic radii --- */
+.card { border-radius: 34px 34px 34px 10px; }
+.card:nth-child(even) { border-radius: 10px 34px 34px 34px; }
+.job { border-radius: 38px 38px 38px 10px; }
+.repo { border-radius: 32px 32px 32px 8px; }
+.repo:nth-child(even) { border-radius: 8px 32px 32px 32px; }
+.skill-group { border-radius: 34px; }
+.feature { border-radius: 56px 56px 56px 14px; }
+.pub { border-radius: 14px 52px 52px 52px; }
+.flow-box { border-radius: 36px; }
+.flow li { border-radius: 999px; }
+.certs li, .edu li { border-radius: 26px; }
+.certs a.v { border-radius: 999px; }
+.game-card { border-radius: 48px; }
+.tabs { padding: 6px; gap: 4px; background: rgba(0, 0, 0, 0.14); }
+.tabs button { border: 0; border-radius: 999px; padding: 11px 18px; }
+.tabs button[aria-selected='true'] { background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--border); }
+.overlay { border-radius: 30px; }
+#snakeCanvas { border-radius: 30px; }
+.term { border-radius: 30px; }
+.dpad button { border-radius: 50%; }
+.worker { border-radius: 50%; background: radial-gradient(circle at 50% 38%, #0d1f45, #060f26 70%); }
+.worker .bar { display: none; }
+.worker.crashed { background: radial-gradient(circle at 50% 38%, #4a1226, #200915 72%); box-shadow: 0 0 0 calc(var(--p, 0) * 7px) rgba(251, 113, 133, 0.38); }
+.mcard, .mcard .face { border-radius: 50%; }
+.mail-addr { border-radius: 999px; }
+.skeleton { border-radius: 32px; }
+
+/* --- 3D tilt glare (JS only sets inline transform + --mx/--my) --- */
+.card, .repo, .skill-group, .stat, .job { position: relative; }
+.tilting { will-change: transform; z-index: 2; }
+.card::after, .repo::after, .skill-group::after, .stat::after, .job::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.3s;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.14), transparent 60%);
+}
+:root[data-theme='light'] .card::after, :root[data-theme='light'] .repo::after, :root[data-theme='light'] .skill-group::after,
+:root[data-theme='light'] .stat::after, :root[data-theme='light'] .job::after {
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(31, 95, 214, 0.12), transparent 60%);
+}
+.tilting::after { opacity: 1; }
+.card:hover, .repo:hover, .skill-group:hover { transform: none; }
+
+/* footer sits below the last wave */
+.site-footer { position: relative; z-index: 3; padding-top: 84px; border-top: 0; }
+
+/* --- frosted glass so text stays readable over the 3D scene --- */
+.card, .job, .repo, .skill-group, .stat, .feature, .pub, .certs li, .edu li, .game-card, .crash-hud, .term {
+  -webkit-backdrop-filter: blur(12px) saturate(1.15); backdrop-filter: blur(12px) saturate(1.15);
+}
+.card, .job, .repo, .skill-group, .stat, .feature, .pub, .certs li, .edu li { background: color-mix(in srgb, var(--bg-2) 62%, transparent); }
+:root[data-theme='light'] .card, :root[data-theme='light'] .job, :root[data-theme='light'] .repo, :root[data-theme='light'] .skill-group,
+:root[data-theme='light'] .stat, :root[data-theme='light'] .feature, :root[data-theme='light'] .pub,
+:root[data-theme='light'] .certs li, :root[data-theme='light'] .edu li { background: rgba(255, 255, 255, 0.72); }
+
+/* --- skills sphere --- */
+.sphere-wrap { display: grid; place-items: center; gap: 6px; margin: 4px auto 34px; }
+#skillSphere { width: min(100%, 640px); aspect-ratio: 4 / 3; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.sphere-hint { margin: 0; font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-frame, .blobs i, .section.alt::before, .section.alt::after { animation: none !important; }
+}
