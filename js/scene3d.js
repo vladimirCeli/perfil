@@ -428,6 +428,14 @@ import * as THREE from './vendor/three.module.min.js';
   }
 
   function renderOnce() { if (!running) { lastT = tAbs; step(tAbs, 0.016); } }
+  /* With "reduce motion" the scene stays still on its own, but animations the visitor triggers (a crash and its recovery) still play for a few seconds. */
+  var burstTimer = 0;
+  function burst() {
+    if (!REDUCED) { renderOnce(); return; }
+    start();
+    clearTimeout(burstTimer);
+    burstTimer = setTimeout(function () { if (REDUCED) stop(); }, 4500);
+  }
 
   function start() { if (running || fatal) return; running = true; lastT = (performance.now() - clockStart) / 1000; raf = requestAnimationFrame(frame); }
   function stop() { running = false; cancelAnimationFrame(raf); }
@@ -465,15 +473,15 @@ import * as THREE from './vendor/three.module.min.js';
   stage.addEventListener('pointerleave', function () { hoverIdx = -1; stage.style.cursor = ''; });
   stage.addEventListener('pointerdown', function (e) {
     var i = pick(e.clientX, e.clientY, e.pointerType === 'mouse' ? 30 : 44);
-    if (i >= 0) { crash(i, true, tAbs); renderOnce(); }
+    if (i >= 0) { crash(i, true, tAbs); burst(); }
   });
-  if (crashBtn) crashBtn.addEventListener('click', function () { crashRandom(tAbs, true); renderOnce(); });
+  if (crashBtn) crashBtn.addEventListener('click', function () { crashRandom(tAbs, true); burst(); });
 
   window.addEventListener('resize', function () { resize(); renderOnce(); });
   window.addEventListener('scroll', function () { if (!running) renderOnce(); }, { passive: true });
   window.addEventListener('themechange', applyTheme);
   window.addEventListener('langchange', setHud);
-  document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (!REDUCED) start(); });
   canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); shutdown('context lost'); });
 
   /* ------------------------------------------------------------------ boot */
@@ -482,7 +490,7 @@ import * as THREE from './vendor/three.module.min.js';
   root.classList.add('gl');       // reveal the canvas, hide the 2D fallback
   if (App.bg) App.bg.stop();
   if (hud) {
-    if (REDUCED) { hud.hidden = true; } else { hud.hidden = false; setHud(); }
+    hud.hidden = false; setHud();
   }
   if (!REDUCED) start();
   window.GL3D = { ok: true, screenOf: function (i) { group.updateMatrixWorld(true); projV.copy(nodes[i].pos).applyMatrix4(group.matrixWorld).project(camera); return { x: (projV.x * 0.5 + 0.5) * vw, y: (-projV.y * 0.5 + 0.5) * vh, crashed: nodes[i].crashed }; }, crash: function () { return crashRandom(tAbs, true); }, state: function () { return { restarts: restarts, running: running, pulses: pulses.length, crashed: nodes.filter(function (n) { return n.crashed; }).length, nodes: N }; }, stop: stop, start: start };
