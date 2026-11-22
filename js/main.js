@@ -3,7 +3,7 @@
   'use strict';
 
   var root = document.documentElement;
-  var REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var REDUCED = false; // animations run the same in every browser, regardless of the OS "reduce motion" setting
   var SITE = window.SITE;
 
   /* If anything below fails, never leave content hidden by the reveal animation. */

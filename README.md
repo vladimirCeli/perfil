@@ -4,11 +4,11 @@ Live site: https://vladimirceli.github.io/perfil/
 
 A hand-built, bilingual (ES/EN) portfolio with a 3D hero scene (three.js, vendored in `js/vendor`) and no trackers.
 
-- **3D:** a self-healing process network around the portrait (`js/scene3d.js`), an interactive skills sphere (`js/tagsphere.js`) and 3D tilt cards. Falls back to a 2D background without WebGL and freezes under `prefers-reduced-motion`. Add `?nogl` to the URL to force the fallback.
+- **3D:** a self-healing process network around the portrait (`js/scene3d.js`), an interactive skills sphere (`js/tagsphere.js`) and 3D tilt cards. Falls back to a 2D background without WebGL. Add `?nogl` to the URL to force the fallback.
 - **Live data:** public repos come from the GitHub API (Jobcelis organization first), cached for 10 minutes per session.
 - **Games:** Snake, Memory and "Let it crash" (an Erlang-style supervisor game). All rules live in `js/cores.js` and are unit-tested.
 - **Terminal:** type `help` in the terminal section.
-- **Accessibility:** keyboard navigable, skip link, ARIA tabs, `prefers-reduced-motion` and light/dark themes.
+- **Accessibility:** keyboard navigable, skip link, ARIA tabs, and light/dark themes.
 - **Credentials:** every certificate and degree links to its public verification page.
 
 ## Structure

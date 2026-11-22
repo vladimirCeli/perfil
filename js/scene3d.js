@@ -15,7 +15,7 @@ import * as THREE from './vendor/three.module.min.js';
   if (!canvas || !stage || !App) return;
   var params = new URLSearchParams(location.search);
   if (params.has('nogl')) { console.info('[3D] disabled with ?nogl'); return; }
-  var REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var REDUCED = App.reduced;
 
   var renderer;
   try {

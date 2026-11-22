@@ -155,10 +155,6 @@ html { scroll-padding-top: 92px; }
 #skillSphere { width: min(100%, 640px); aspect-ratio: 4 / 3; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .sphere-hint { margin: 0; font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-align: center; }
 
-@media (prefers-reduced-motion: reduce) {
-  .avatar-frame, .blobs i, .section.alt::before, .section.alt::after { animation: none !important; }
-}
-
 /* --- compatibility: Safari < 16.2 and other browsers without color-mix() / @property --- */
 @supports not (background: color-mix(in srgb, red 50%, blue)) {
   :root { --alt-bg: rgba(8, 18, 42, 0.8); }
