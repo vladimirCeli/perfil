@@ -158,3 +158,19 @@ html { scroll-padding-top: 92px; }
 @media (prefers-reduced-motion: reduce) {
   .avatar-frame, .blobs i, .section.alt::before, .section.alt::after { animation: none !important; }
 }
+
+/* --- compatibility: Safari < 16.2 and other browsers without color-mix() / @property --- */
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  :root { --alt-bg: rgba(8, 18, 42, 0.8); }
+  :root[data-theme='light'] { --alt-bg: rgba(234, 240, 252, 0.8); }
+  .card, .job, .repo, .skill-group, .stat, .feature, .pub, .certs li, .edu li { background: rgba(8, 18, 42, 0.62); }
+  :root[data-theme='light'] .card, :root[data-theme='light'] .job, :root[data-theme='light'] .repo, :root[data-theme='light'] .skill-group,
+  :root[data-theme='light'] .stat, :root[data-theme='light'] .feature, :root[data-theme='light'] .pub,
+  :root[data-theme='light'] .certs li, :root[data-theme='light'] .edu li { background: rgba(255, 255, 255, 0.7); }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+  .tag { background: rgba(79, 141, 255, 0.14); }
+  ::selection { background: rgba(79, 141, 255, 0.4); }
+}
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .avatar-frame { background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+}
